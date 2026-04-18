@@ -1,0 +1,7 @@
+ipykernel
+jupyterlab
+nbformat
+pytest
+ruff
+mypy
+pyyaml
