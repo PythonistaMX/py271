@@ -57,4 +57,44 @@ contexto_proyecto.md
 data_tmp/
 graph_tmp/
 
+# OS / filesystem
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+*~
+.fuse_hidden*
+
+# Dropbox metadata
+.dropbox
+.dropbox.cache
+
+# Editor
+.idea/
+*.swp
+*.swo
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Credenciales y secretos
+*.pem
+*.key
+*.p12
+*.pfx
+service_account*.json
+credentials.json
+secrets.yaml
+secrets.yml
+gcp-key*.json
+
 .claude/
