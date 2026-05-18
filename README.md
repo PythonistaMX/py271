@@ -18,7 +18,13 @@ Construir un pipeline funcional de CI/CD que cubra:
 
 ## Perfil del alumno
 
-Programador (principalmente Python, pero no exclusivamente) con experiencia en desarrollo back-end o full-stack. Se asume fluidez con Python y git. No se asume conocimiento previo de DevSecOps, CI/CD, IaC ni pipelines de entrega.
+Programador (principalmente Python, pero no exclusivamente) con experiencia en desarrollo back-end o full-stack.
+
+Se asume:
+- fluidez con Python;
+- uso cotidiano de git: commits, branches, merges y pull requests.
+
+No se asume conocimiento previo de DevSecOps, CI/CD, IaC ni pipelines de entrega.
 
 ## Modalidad sugerida
 
