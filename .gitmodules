@@ -1,0 +1,6 @@
+[submodule "apps/api-github-actions-demo"]
+	path = apps/api-github-actions-demo
+	url = https://github.com/PythonistaMX/api-github-actions-demo.git
+[submodule "infra/terraform-py271"]
+	path = infra/terraform-py271
+	url = https://github.com/PythonistaMX/terraform-py271.git
