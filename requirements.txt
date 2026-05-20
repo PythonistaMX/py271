@@ -1,7 +1,27 @@
 ipykernel
 jupyterlab
 nbformat
+
+# Calidad y pruebas
 pytest
+pytest-cov
 ruff
 mypy
+bandit
+flake8
+pylint
+isort
+black
+pre-commit
+
+# Dependencias de ejemplos y demos
+requests
+flask
+apiflask
+
+# Herramientas de entorno mencionadas en notebooks
+uv
+pipx
+
+# Soporte de configuracion
 pyyaml
