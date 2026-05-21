@@ -142,6 +142,7 @@ git submodule update --init --recursive
 - Google Cloud Build se presenta como alternativa avanzada, no como ruta principal.
 - Google Artifact Registry funciona como registro principal de artefactos e imágenes en GCP.
 - La ruta serverless del curso se enfoca en Google Cloud Functions para cargas ligeras y orientadas a eventos.
+- Aunque Kubernetes tambien ejecuta cargas contenerizadas, en este curso no se adopta como ruta base porque el caso de estudio no responde a una arquitectura de microservicios que justifique su complejidad operativa.
 - El modelo de entornos oficial es: *dev* en local con SQLite, *test* en Linux con PostgreSQL y *prod* en GCP con Cloud SQL PostgreSQL.
 - El despliegue en Linux contempla una ruta explícita de despliegue remoto por SSH hacia servidores endurecidos.
 - La observabilidad se trata como parte del pipeline de entrega: logs, métricas, alertas, smoke tests y rollback.

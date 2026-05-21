@@ -89,5 +89,6 @@ La recomendacion didactica es promover el mismo artefacto entre entornos y varia
 
 - Separar claramente conceptos de CI, CD, seguridad e IaC.
 - Evitar acoplar demasiado pronto ejemplos a una sola plataforma concreta.
+- Explicar que Kubernetes no es la ruta base del curso: aunque usa contenedores, su valor principal aparece en arquitecturas de microservicios y el caso de estudio actual no requiere ese nivel de orquestacion.
 - Mostrar fallas reales de pipeline, no solo ejecuciones exitosas.
 - Tratar IaC como parte del sistema de entrega, no como apendice teorico.
