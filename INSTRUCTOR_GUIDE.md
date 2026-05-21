@@ -15,8 +15,8 @@ La base tematica de GitHub Actions esta reorganizada con la estructura editorial
 1. Marco conceptual: DevSecOps, workflows de repositorio y entornos.
 2. Fundamentos de GitHub Actions y workflows.
 3. Matriz, calidad tecnica y pruebas en pipeline.
-4. Seguridad de cadena de suministro, identidad y contenedores.
-5. Provision con Terraform en GCP.
+4. Seguridad de cadena de suministro y contenedores.
+5. Provision con Terraform en GCP e identidad federada con OIDC.
 6. Despliegue en Linux y operacion segura.
 7. Proyecto final integrador.
 
@@ -29,8 +29,9 @@ El tramo central del curso avanza por estos conceptos:
 - matriz de versiones y promocion por entornos;
 - quality gates con linters, tipado y pruebas automatizadas;
 - seguridad de cadena de suministro: SBOM, provenance, attestations y escaneo;
-- identidad federada con OIDC para evitar llaves estaticas;
-- build de contenedores con criterio de runners hosted y self-hosted endurecidos.
+- build de contenedores con criterio de runners hosted y self-hosted endurecidos;
+- provision de infraestructura con Terraform en GCP;
+- identidad federada con OIDC y Workload Identity Federation (requiere Terraform).
 
 ## Criterio operativo de plataforma
 
