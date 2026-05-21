@@ -14,11 +14,40 @@ La base tematica de GitHub Actions esta reorganizada con la estructura editorial
 
 1. Marco conceptual: DevSecOps, workflows de repositorio y entornos.
 2. Fundamentos de GitHub Actions y workflows.
-3. Calidad tecnica y pruebas en pipeline.
-4. Contenedores y seguridad de cadena de suministro.
+3. Matriz, calidad tecnica y pruebas en pipeline.
+4. Seguridad de cadena de suministro, identidad y contenedores.
 5. Provision con Terraform en GCP.
 6. Despliegue en Linux y operacion segura.
 7. Proyecto final integrador.
+
+## Bloque tematico central
+
+El tramo central del curso avanza por estos conceptos:
+
+- marco operativo de DevSecOps y entornos;
+- diseno y sintaxis de workflows en GitHub Actions;
+- matriz de versiones y promocion por entornos;
+- quality gates con linters, tipado y pruebas automatizadas;
+- seguridad de cadena de suministro: SBOM, provenance, attestations y escaneo;
+- identidad federada con OIDC para evitar llaves estaticas;
+- build de contenedores con criterio de runners hosted y self-hosted endurecidos.
+
+## Criterio operativo de plataforma
+
+- GitHub Actions se mantiene como plano de control principal del pipeline.
+- Los hosted runners son la opcion por defecto.
+- Los self-hosted runners se usan solo cuando hay necesidad tecnica justificada (red privada, segmentacion o cumplimiento).
+- Cloud Build se presenta como alternativa avanzada, no como ruta principal.
+
+## Modelo de entornos del curso
+
+Para imparticion y practicas, el curso usa este modelo:
+
+- dev: maquina del desarrollador con SQLite para iteracion local.
+- test: servidor Linux hosteado con PostgreSQL para despliegue remoto y validacion operativa.
+- prod: GCP con Cloud SQL para PostgreSQL y publicacion en Cloud Functions (2nd gen, sobre Cloud Run).
+
+La recomendacion didactica es promover el mismo artefacto entre entornos y variar solo configuracion, identidad y controles de aprobacion.
 
 ## Empaque recomendado
 
@@ -32,6 +61,7 @@ La base tematica de GitHub Actions esta reorganizada con la estructura editorial
 - Disenar workflows mantenibles en GitHub Actions.
 - Aplicar quality gates con herramientas de lint, tipado y pruebas.
 - Construir y validar imagenes de contenedor en CI.
+- Aplicar criterio tecnico para decidir entre runners hosted y self-hosted.
 - Integrar controles de seguridad en la cadena de suministro.
 - Provisionar infraestructura con Terraform para despliegue continuo en Google Cloud Functions y Linux.
 - Ejecutar despliegues con criterios de seguridad, observabilidad y rollback.

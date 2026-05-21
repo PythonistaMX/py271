@@ -5,6 +5,7 @@ nbformat
 # Calidad y pruebas
 pytest
 pytest-cov
+tox
 ruff
 mypy
 bandit

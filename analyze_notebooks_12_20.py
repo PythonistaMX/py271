@@ -2,8 +2,8 @@ import json
 import os
 
 notebooks = [
-    "12_seguridad_de_dependencias_y_imagenes.ipynb",
-    "13_iam_oidc_y_autenticacion_sin_llaves.ipynb",
+    "12_iam_oidc_y_autenticacion_sin_llaves.ipynb",
+    "13_build_contenedores_en_actions.ipynb",
     "14_terraform_fundamentos_y_estado_remoto.ipynb",
     "15_terraform_para_artifact_registry_y_cloud_functions.ipynb",
     "16_terraform_para_compute_engine_y_red.ipynb",
