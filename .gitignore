@@ -38,6 +38,14 @@ coverage.xml
 # Jupyter Notebook
 .ipynb_checkpoints/
 
+# Notebook artifacts / derived code
+*.nbconvert.ipynb
+*_executed.ipynb
+*_output.ipynb
+validate_notebooks.py
+summarize_notebooks.py
+write_nb.py
+
 # Environments
 .env
 .venv/
