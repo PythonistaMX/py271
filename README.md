@@ -41,11 +41,11 @@ El curso está empaquetado como taller de 16 horas en 8 sesiones de 2 horas. La 
 - Sesión 1: CI/CD y riesgos actuales, flujos de trabajo y plataforma GitHub.
 - Sesión 2: Marco DevSecOps, introducción a GitHub Actions y sintaxis YAML.
 - Sesión 3: Matriz de versiones y entornos; linters, tipado y pruebas automatizadas.
-- Sesión 4: SBOM, provenance, seguridad de dependencias e IAM/OIDC.
-- Sesión 5: Build de contenedores y runners endurecidos; Terraform: fundamentos y estado remoto.
-- Sesión 6: Terraform para Artifact Registry, Cloud Functions y Compute Engine.
-- Sesión 7: Pipelines de infraestructura y despliegue seguro en Linux.
-- Sesión 8: Observabilidad, rollback y proyecto final end to end.
+- Sesión 4: SBOM, provenance y seguridad de dependencias e imágenes.
+- Sesión 5: Build de contenedores en Actions; Terraform: fundamentos y estado remoto.
+- Sesión 6: Terraform para Artifact Registry, Cloud Run y Compute Engine.
+- Sesión 7: IAM, OIDC y autenticación sin llaves; pipelines de infraestructura y despliegue seguro en Linux.
+- Sesión 8: Observabilidad, smoke tests, rollback y proyecto final end to end.
 
 ## Bloque temático central
 
@@ -65,7 +65,7 @@ El curso trabaja con tres entornos operativos bien diferenciados:
 
 - *dev*: máquina del desarrollador con SQLite para iteración rápida local.
 - *test*: servidor Linux hosteado con PostgreSQL para validar despliegue remoto y operación realista.
-- *prod*: GCP con Cloud SQL para PostgreSQL y publicación en Cloud Functions (2nd gen, sobre Cloud Run).
+- *prod*: GCP con Cloud SQL para PostgreSQL y despliegue en Cloud Run v2.
 
 La promoción mantiene el mismo artefacto entre entornos para conservar trazabilidad y evitar reconstrucciones por ambiente.
 
@@ -88,10 +88,8 @@ py271/
 
 ## Submódulos sugeridos
 
-- `apps/api-github-actions-demo`: aplicación base del curso.
-- `infra/terraform-py271`: infraestructura del curso con Terraform.
-
-La plantilla deja estos componentes documentados, pero no registra submódulos reales todavía.
+- `apps/api-github-actions-demo`: aplicación base del curso — API Flask con cinco workflows de CI/CD.
+- `infra/terraform-py271`: infraestructura del curso con Terraform — Cloud Run, Cloud SQL, Artifact Registry y WIF/OIDC.
 
 ## Tabla de contenidos
 
@@ -106,15 +104,26 @@ La plantilla deja estos componentes documentados, pero no registra submódulos r
 - 09 - Pruebas automatizadas con pytest
 - 10 - SBOM, provenance y attestations
 - 11 - Seguridad de dependencias e imágenes
-- 12 - IAM, OIDC y autenticación sin llaves
-- 13 - Build de contenedores y runners endurecidos en Actions
-- 14 - Terraform: fundamentos y estado remoto
-- 15 - Terraform para Artifact Registry y Cloud Functions
-- 16 - Terraform para Compute Engine y red
+- 12 - Build de contenedores en Actions
+- 13 - Terraform: fundamentos y estado remoto
+- 14 - Terraform para Artifact Registry y Cloud Run
+- 15 - Terraform para Compute Engine y red
+- 16 - IAM, OIDC y autenticación sin llaves
 - 17 - Pipelines de infraestructura: plan y apply
 - 18 - Despliegue seguro en Linux
 - 19 - Observabilidad, smoke tests y rollback
 - 20 - Proyecto final end to end
+
+## Demos
+
+`demos/` contiene ejercicios ejecutables de apoyo a sesiones específicas:
+
+| Carpeta | Sesión | Contenido |
+|---|---|---|
+| `demos/06/` | Sesión 2 — YAML y sintaxis de workflows | `blank.yml`: plantilla mínima de workflow para completar en clase |
+| `demos/08/` | Sesión 3 — Linters y pruebas | `calculadora.py` + suite `pytest` con parametrize y manejo de excepciones; incluye reto de extensión |
+
+Cada subcarpeta tiene su propio `README.md` con instrucciones de ejecución y reto.
 
 ## Uso local
 
@@ -141,7 +150,7 @@ git submodule update --init --recursive
 - El uso de self-hosted runners se reserva para necesidades técnicas justificadas (red privada, segmentación o cumplimiento).
 - Google Cloud Build se presenta como alternativa avanzada, no como ruta principal.
 - Google Artifact Registry funciona como registro principal de artefactos e imágenes en GCP.
-- La ruta serverless del curso se enfoca en Google Cloud Functions para cargas ligeras y orientadas a eventos.
+- La ruta serverless del curso se enfoca en Google Cloud Run v2 para cargas contenerizadas orientadas a eventos.
 - Aunque Kubernetes tambien ejecuta cargas contenerizadas, en este curso no se adopta como ruta base porque el caso de estudio no responde a una arquitectura de microservicios que justifique su complejidad operativa.
 - El modelo de entornos oficial es: *dev* en local con SQLite, *test* en Linux con PostgreSQL y *prod* en GCP con Cloud SQL PostgreSQL.
 - El despliegue en Linux contempla una ruta explícita de despliegue remoto por SSH hacia servidores endurecidos.
