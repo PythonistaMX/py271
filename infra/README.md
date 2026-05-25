@@ -1,42 +1,64 @@
 # Infraestructura del curso
 
-Esta carpeta se reserva para repositorios de IaC o material de infraestructura asociado al curso.
+Esta carpeta contiene el material de infraestructura como código (IaC) del curso.
 
-## Sugerencia inicial
+## Contenido
 
-- terraform-py271: recursos para GCP, Artifact Registry, Google Cloud Functions, Compute Engine y componentes base del despliegue.
+- **`terraform-py271/`** — Stack GCP para la aplicación `api-github-actions-demo`:
+  Artifact Registry, Cloud SQL PostgreSQL, Cloud Run y configuración de
+  Workload Identity Federation para autenticación OIDC desde GitHub Actions.
+
+## Arquitectura de prod
+
+```
+GitHub Actions
+    │  OIDC (sin llaves estáticas)
+    ▼
+cicd-deployer SA
+    │  roles/run.admin + roles/artifactregistry.writer
+    ▼
+Cloud Run ──────────────── Cloud SQL (PostgreSQL 15)
+(apiflask-demo-runtime SA)     (socket Unix via Auth Proxy)
+    │
+    │  roles/secretmanager.secretAccessor (solo DATABASE_URL)
+    ▼
+Secret Manager
+(DATABASE_URL — valor poblado manualmente tras terraform apply)
+```
 
 ## Flujo recomendado: Terraform + OIDC
 
-Modelo operativo sugerido:
+1. `plan` y `apply` desde GitHub Actions con entornos protegidos (`test`, `prod`).
+2. Autenticación a GCP mediante OIDC + Workload Identity Federation — sin llaves JSON.
+3. Promotion de imagen inmutable desde GHCR a Cloud Run entre `test` y `prod`.
 
-1. `plan` y `apply` de Terraform desde GitHub Actions con entornos protegidos.
-2. Autenticación a GCP mediante OIDC + Workload Identity Federation.
-3. Promoción de un artefacto inmutable entre `test` y `prod`.
+## Variables de GitHub Actions requeridas por los workflows de despliegue
 
-Variables de entorno recomendadas en GitHub (`Environment variables`):
+Configura estas variables en `Settings → Environments → prod → Variables`.
+Los valores se obtienen de los outputs de Terraform tras `terraform apply`.
 
-- `GCP_PROJECT_ID`
-- `GCP_REGION`
-- `GCP_WORKLOAD_IDENTITY_PROVIDER`
-- `GCP_SERVICE_ACCOUNT`
-- `TF_STATE_BUCKET` (si usas backend remoto en GCS)
+| Variable | Fuente |
+|---|---|
+| `GCP_PROJECT_ID` | `terraform.tfvars` |
+| `GCP_REGION` | `terraform.tfvars` |
+| `GCP_WORKLOAD_IDENTITY_PROVIDER` | `terraform output workload_identity_provider` |
+| `GCP_SERVICE_ACCOUNT` | `terraform output cicd_service_account_email` |
+| `GCP_CLOUD_SQL_CONNECTION_NAME` | `terraform output cloud_sql_instance_connection_name` |
+| `GCP_CLOUD_RUN_SERVICE` | `terraform output cloud_run_service_name` |
+| `TF_STATE_BUCKET` | Nombre del bucket GCS para el estado remoto de Terraform |
 
-Secretos de entorno recomendados (`Environment secrets`):
+## Buenas prácticas aplicadas
 
-- `TF_VAR_db_password` (si aplica)
-- secretos propios de aplicación (si no están en Secret Manager)
-
-Buenas prácticas del curso:
-
-- No usar llaves estáticas de GCP (`*.json`) en GitHub.
-- Usar `permissions: id-token: write` y `contents: read` en workflows.
+- No usar llaves estáticas de GCP (`*.json`) en GitHub Secrets.
+- Separar SA de CI/CD (`cicd-deployer`) del SA de runtime de Cloud Run.
+- `DATABASE_URL` en Secret Manager (no como variable de entorno plana); el runtime SA tiene acceso solo a ese secreto.
+- `lifecycle.ignore_changes` en Cloud Run para que Terraform no revierta imágenes.
+- `deletion_protection = true` en Cloud SQL para entornos productivos.
 - Separar jobs de `plan` y `apply`, con aprobación manual en `prod`.
-- Mantener módulos y proveedores de Terraform versionados/pineados.
 
-## Ejemplo de alta de submodulo
+## Alta como submódulo
 
 ```bash
-git submodule add https://github.com/TU_ORG/terraform-py271.git infra/terraform-py271
+git submodule add https://github.com/PythonistaMX/terraform-py271.git infra/terraform-py271
 git submodule update --init --recursive
 ```
