@@ -59,6 +59,7 @@ ENV/
 
 # Local planning files
 PLAN_*.md
+OPERACIONES_*.md
 contexto_proyecto.md
 
 # Temporary local assets
