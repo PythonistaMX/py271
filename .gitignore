@@ -34,6 +34,8 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+junit*.xml
+*.sarif
 
 # Jupyter Notebook
 .ipynb_checkpoints/
@@ -48,6 +50,8 @@ write_nb.py
 
 # Environments
 .env
+.env.local
+.env.*.local
 .venv/
 env/
 venv/
