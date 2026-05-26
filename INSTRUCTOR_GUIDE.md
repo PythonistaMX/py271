@@ -46,7 +46,7 @@ Para imparticion y practicas, el curso usa este modelo:
 
 - dev: maquina del desarrollador con SQLite para iteracion local.
 - test: servidor Linux hosteado con PostgreSQL para despliegue remoto y validacion operativa.
-- prod: GCP con Cloud SQL para PostgreSQL y publicacion en Cloud Functions (2nd gen, sobre Cloud Run).
+- prod: GCP con Cloud SQL para PostgreSQL y despliegue en Cloud Run v2.
 
 La recomendacion didactica es promover el mismo artefacto entre entornos y variar solo configuracion, identidad y controles de aprobacion.
 
