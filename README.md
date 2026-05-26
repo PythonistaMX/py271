@@ -77,7 +77,6 @@ py271/
 ├── apps/
 ├── data/
 ├── demos/
-├── ejercicios_resueltos/
 ├── img/
 ├── infra/
 ├── 01_*.ipynb ... 20_*.ipynb
@@ -100,7 +99,7 @@ py271/
 - 05 - Introducción a CI/CD y GitHub Actions
 - 06 - YAML y sintaxis de workflows
 - 07 - Matriz de versiones y entornos
-- 08 - Linters y tipado en pipeline
+- 08 - Linters, tipado y gestores de paquetes y entornos
 - 09 - Pruebas automatizadas con pytest
 - 10 - SBOM, provenance y attestations
 - 11 - Seguridad de dependencias e imágenes
@@ -121,7 +120,7 @@ py271/
 | Carpeta | Sesión | Contenido |
 |---|---|---|
 | `demos/06/` | Sesión 2 — YAML y sintaxis de workflows | `blank.yml`: plantilla mínima de workflow para completar en clase |
-| `demos/08/` | Sesión 3 — Linters y pruebas | `calculadora.py` + suite `pytest` con parametrize y manejo de excepciones; incluye reto de extensión |
+| `demos/08/` | Sesión 3 — Linters, tipado y pruebas | `calculadora.py` con anotaciones de tipo + quality gates: `ruff`, `mypy` y `pytest` con `parametrize`; incluye reto de extensión |
 
 Cada subcarpeta tiene su propio `README.md` con instrucciones de ejecución y reto.
 
@@ -140,6 +139,12 @@ Si después agregas submódulos:
 
 ```bash
 git submodule update --init --recursive
+```
+
+Si el repositorio de infra no está disponible, usa `.gitmodules.example` como plantilla con URLs de marcador de posición:
+
+```bash
+cp .gitmodules.example .gitmodules
 ```
 
 ## Notas de operación
