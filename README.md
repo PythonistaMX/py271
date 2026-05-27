@@ -34,6 +34,24 @@ Se asume:
 
 No se asume conocimiento previo de DevSecOps, CI/CD, IaC ni pipelines de entrega.
 
+## Ruta de aprendizaje previa
+
+Este curso es la continuación natural de la siguiente ruta del catálogo Cloudevel:
+
+| Curso | Contenido | Nivel |
+|---|---|---|
+| [cd101 — GNU/Linux desde la línea de comandos](https://github.com/Cloudevel/cd101) | Shell, permisos, procesos, systemd, redes, SSH, seguridad básica | Introductorio |
+| [cd411 — Introducción a Git](https://github.com/Cloudevel/cd411) | Control de versiones, ramas, resolución de conflictos, integración con GitHub | Introductorio |
+| [cd421 — GitHub Avanzado](https://github.com/Cloudevel/cd421) | Administración de repos y organizaciones, GitHub Actions, entornos, secretos, `gh` CLI | Intermedio |
+| [cd501 — Gestión de contenedores con Docker](https://github.com/Cloudevel/cd501) | Imágenes, contenedores, redes, volúmenes, registros privados, Docker Compose | Intermedio |
+| [gcp101 — Google Cloud Platform](https://github.com/Cloudevel/gcp101) | IAM, Compute Engine, Cloud Run, Cloud SQL, Secret Manager, redes, operaciones | Intermedio |
+| [cd441 — CI/CD con GitHub Actions](https://github.com/Cloudevel/cd441) | Pipelines reales, runners, artefactos, despliegue en GCP y Linux | Intermedio |
+| **py271 — CI/CD Seguro** | Endurecimiento, DevSecOps, IaC, OIDC, cadena de suministro | **Intermedio-Avanzado** |
+
+El prerrequisito directo es **cd441**. Los cursos cd101, cd501 y gcp101 proveen el contexto operativo que cd441 y este curso asumen conocido.
+
+> **Nota sobre Terraform:** los notebooks 13 al 17 introducen Terraform desde fundamentos. No existe aún un curso dedicado de Terraform en la serie; ese material se cubre aquí por primera vez.
+
 ## Modalidad sugerida
 
 El curso está empaquetado como taller de 16 horas en 8 sesiones de 2 horas. La distribución recomendada es:
@@ -154,7 +172,7 @@ cp .gitmodules.example .gitmodules
 - GitHub Actions opera como plano de control principal del pipeline.
 - El uso de self-hosted runners se reserva para necesidades técnicas justificadas (red privada, segmentación o cumplimiento).
 - Google Cloud Build se presenta como alternativa avanzada, no como ruta principal.
-- Google Artifact Registry funciona como registro principal de artefactos e imágenes en GCP.
+- GitHub Container Registry (*GHCR*) funciona como registro principal de artefactos e imágenes del curso.
 - La ruta serverless del curso se enfoca en Google Cloud Run v2 para cargas contenerizadas orientadas a eventos.
 - Aunque Kubernetes tambien ejecuta cargas contenerizadas, en este curso no se adopta como ruta base porque el caso de estudio no responde a una arquitectura de microservicios que justifique su complejidad operativa.
 - El modelo de entornos oficial es: *dev* en local con SQLite, *test* en Linux con PostgreSQL y *prod* en GCP con Cloud SQL PostgreSQL.
