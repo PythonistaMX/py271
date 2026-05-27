@@ -94,7 +94,6 @@ gcloud config set project <PROJECT_ID>
 gcloud services enable \
   run.googleapis.com \
   sqladmin.googleapis.com \
-  artifactregistry.googleapis.com \
   secretmanager.googleapis.com \
   iam.googleapis.com \
   iamcredentials.googleapis.com \
@@ -129,7 +128,6 @@ project_id                 = "<PROJECT_ID>"
 region                     = "<REGION>"          # ej. us-central1
 environment                = "prod"
 app_name                   = "apiflask-demo"
-artifact_repository_id     = "apps"
 cloud_sql_instance_name    = "apiflask-prod-sql"
 cloud_sql_database_name    = "apiflask"
 cloud_sql_tier             = "db-f1-micro"
@@ -169,8 +167,10 @@ terraform output
 | `workload_identity_provider` | → `GCP_WORKLOAD_IDENTITY_PROVIDER` en GitHub |
 | `cicd_service_account_email` | → `GCP_SERVICE_ACCOUNT` en GitHub |
 | `cloud_sql_instance_connection_name` | → `GCP_CLOUD_SQL_CONNECTION_NAME` en GitHub y paso 5 |
+| `cloud_sql_database_name` | → variable `DB_NAME` en paso 5 |
 | `cloud_run_service_name` | → `GCP_CLOUD_RUN_SERVICE` en GitHub |
 | `cloud_run_service_url` | → URL para verificación final |
+| `database_url_secret_name` | → verificación del secreto creado en Secret Manager |
 
 ### Paso 5 — Poblar secretos en Secret Manager
 
@@ -238,6 +238,8 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 | Secreto | `APP_SECRET_KEY` | mismo valor que pusiste en Secret Manager |
 | Secreto | `APP_SECURITY_PASSWORD_SALT` | mismo valor que pusiste en Secret Manager |
 
+> **Nota sobre `despliega-cloud-run.yaml` y el entorno `test`:** El workflow se dispara con cualquier tag semver, incluidos prerelease (`v1.2.3-rc.1` → `target=test`). Si el entorno `test` también usa Cloud Run, configura las mismas variables GCP en `Settings → Environments → test` del repo de la app. Si `test` solo usa el servidor Linux (no Cloud Run), el workflow fallará en el paso de autenticación OIDC para tags `-rc.*`; en ese caso, restringe el trigger del workflow a tags estables únicamente (`v[0-9]+.[0-9]+.[0-9]+`) o añade una condición `if` que omita el job para `test`.
+
 #### Repo de infra — entornos `test` y `prod`
 
 `Settings → Environments → prod` (en `infra/terraform-py271`)
@@ -249,7 +251,6 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 | Variable | `GCP_WORKLOAD_IDENTITY_PROVIDER` | `terraform output workload_identity_provider` |
 | Variable | `GCP_SERVICE_ACCOUNT` | `terraform output cicd_service_account_email` |
 | Variable | `APP_NAME` | `apiflask-demo` |
-| Variable | `ARTIFACT_REPOSITORY_ID` | `apps` |
 | Variable | `CLOUD_SQL_INSTANCE_NAME` | valor de `terraform.tfvars` |
 | Variable | `CLOUD_SQL_DATABASE_NAME` | valor de `terraform.tfvars` |
 | Variable | `CLOUD_SQL_TIER` | `db-f1-micro` |
