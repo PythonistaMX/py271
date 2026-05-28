@@ -131,6 +131,7 @@ py271/
 - 18 - Despliegue seguro en Linux
 - 19 - Observabilidad, smoke tests y rollback
 - 20 - Proyecto final end to end
+- 21 - Criterios y trade-offs de endurecimiento
 
 ## Demos
 
