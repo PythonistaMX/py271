@@ -225,9 +225,23 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 
 ### Paso 7 — Configurar entornos en GitHub Actions
 
+#### Repo de la app — entorno `test`
+
+`Settings → Environments → test`
+
+Usado por `python-app-test.yml` (PRs y push a `main`) y `envia-a-packages.yml` (tags prerelease).
+
+| Tipo | Nombre | Valor |
+|---|---|---|
+| Variable | `DATABASE_URL` | `postgresql://app_user:<pass>@/<db>?host=/cloudsql/<connection_name>` |
+| Secreto | `APP_SECRET_KEY` | string aleatorio ≥ 32 chars |
+| Secreto | `APP_SECURITY_PASSWORD_SALT` | string aleatorio ≥ 32 chars |
+
 #### Repo de la app — entorno `prod`
 
 `Settings → Environments → prod`
+
+Usado por `despliega-cloud-run.yaml` (tags estables `v1.2.3`).
 
 | Tipo | Nombre | Origen |
 |---|---|---|
@@ -237,10 +251,9 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 | Variable | `GCP_SERVICE_ACCOUNT` | `terraform output cicd_service_account_email` |
 | Variable | `GCP_CLOUD_RUN_SERVICE` | `terraform output cloud_run_service_name` |
 | Variable | `GCP_CLOUD_SQL_CONNECTION_NAME` | `terraform output cloud_sql_instance_connection_name` |
+| Variable | `GCP_ARTIFACT_REGISTRY` | `terraform output artifact_registry_url` |
 | Secreto | `APP_SECRET_KEY` | mismo valor que pusiste en Secret Manager |
 | Secreto | `APP_SECURITY_PASSWORD_SALT` | mismo valor que pusiste en Secret Manager |
-
-> **Nota sobre `despliega-cloud-run.yaml` y el entorno `test`:** El workflow se dispara con cualquier tag semver, incluidos prerelease (`v1.2.3-rc.1` → `target=test`). Si el entorno `test` también usa Cloud Run, configura las mismas variables GCP en `Settings → Environments → test` del repo de la app. Si `test` solo usa el servidor Linux (no Cloud Run), el workflow fallará en el paso de autenticación OIDC para tags `-rc.*`; en ese caso, restringe el trigger del workflow a tags estables únicamente (`v[0-9]+.[0-9]+.[0-9]+`) o añade una condición `if` que omita el job para `test`.
 
 #### Repo de infra — entorno `prod`
 
@@ -258,7 +271,7 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 | Variable | `CLOUD_SQL_TIER` | `db-f1-micro` |
 | Variable | `DB_USERNAME` | `app_user` |
 | Variable | `ENABLE_DELETION_PROTECTION` | `true` |
-| Variable | `APP_GITHUB_REPOSITORY` | `org/api-github-actions-demo` |
+| Variable | `APP_GITHUB_REPOSITORY` | `PythonistaMX/api-github-actions-demo` |
 | Variable | `GCP_CLOUD_RUN_SERVICE` | `terraform output cloud_run_service_name` |
 | Variable | `TF_STATE_BUCKET` | nombre del bucket del paso 2 |
 | Secreto | `DB_PASSWORD` | valor de `TF_VAR_db_password` |
@@ -266,10 +279,10 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 ### Paso 8 — Verificar el pipeline completo
 
 ```bash
-# Tag de release candidate → dispara workflows hacia test (Linux)
+# Tag prerelease → envia-a-packages.yml → publica imagen en GHCR (test/dev)
 git tag v0.1.0-rc.1 && git push --tags
 
-# Tag estable → solicita aprobación → despliega a prod (GCP)
+# Tag estable → despliega-cloud-run.yaml → build + AR + deploy prod (blue/green)
 git tag v0.1.0 && git push --tags
 
 # Verificar el servicio en vivo
@@ -301,6 +314,7 @@ curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 | Variable | `GCP_SERVICE_ACCOUNT` | — | — | ✓ |
 | Variable | `GCP_CLOUD_RUN_SERVICE` | — | — | ✓ |
 | Variable | `GCP_CLOUD_SQL_CONNECTION_NAME` | — | — | ✓ |
+| Variable | `GCP_ARTIFACT_REGISTRY` | — | — | ✓ |
 
 ### GCP Secret Manager
 
