@@ -1,14 +1,15 @@
 # CI/CD Seguro con GitHub Actions, GCP, Linux e IaC (Py271)
 
-> Estado: En preparación | Serie: py2xx | Nivel: Intermedio-Avanzado
+> Estado: En preparación | Serie: py2xx | Nivel: Avanzado
 
 ## Nota sobre nivel
 
-Este curso se considera principalmente de nivel intermedio, con algunos tramos intermedio-avanzados.
+Este es un curso avanzado. El proyecto final construye un pipeline de CI/CD de nivel productivo con seguridad de cadena de suministro, identidad federada y despliegue blue/green en GCP.
 
-- Recomendado para perfiles con experiencia previa en desarrollo (especialmente backend) y uso habitual de Git.
-- No está orientado a iniciar desde cero en programación o en flujo de trabajo técnico.
-- Para perfiles senior, funciona como consolidación práctica de CI/CD seguro y operación DevSecOps.
+- Requiere experiencia previa en desarrollo backend, contenedores y uso fluido de Git.
+- Los tramos de Terraform (NB13–17) se cubren desde fundamentos, pero se aplican en configuraciones de producción real.
+- Los tramos de IAM y OIDC (NB16, NB19–20) implican conceptos como Workload Identity Federation, auto-impersonación de service accounts e identity tokens efímeros.
+- Para perfiles senior con experiencia en GCP, el curso añade profundidad en DevSecOps y seguridad de cadena de suministro.
 
 Este repositorio contiene el material del curso orientado a integración y entrega continua segura con GitHub Actions, Google Cloud Platform, Linux e infraestructura como código.
 
@@ -32,7 +33,7 @@ Se asume:
 - fluidez con Python;
 - uso cotidiano de git: commits, branches, merges y pull requests.
 
-No se asume conocimiento previo de DevSecOps, CI/CD, IaC ni pipelines de entrega.
+Se asume haber completado cd441 o tener experiencia equivalente en CI/CD con GitHub Actions. No se asume conocimiento previo de DevSecOps, IaC ni seguridad de cadena de suministro, pero sí de pipelines básicos.
 
 ## Ruta de aprendizaje previa
 
@@ -46,7 +47,7 @@ Este curso es la continuación natural de la siguiente ruta del catálogo Cloude
 | [cd501 — Gestión de contenedores con Docker](https://github.com/Cloudevel/cd501) | Imágenes, contenedores, redes, volúmenes, registros privados, Docker Compose | Intermedio |
 | [gcp101 — Google Cloud Platform](https://github.com/Cloudevel/gcp101) | IAM, Compute Engine, Cloud Run, Cloud SQL, Secret Manager, redes, operaciones | Intermedio |
 | [cd441 — CI/CD con GitHub Actions](https://github.com/Cloudevel/cd441) | Pipelines reales, runners, artefactos, despliegue en GCP y Linux | Intermedio |
-| **py271 — CI/CD Seguro** | Endurecimiento, DevSecOps, IaC, OIDC, cadena de suministro | **Intermedio-Avanzado** |
+| **py271 — CI/CD Seguro** | Endurecimiento, DevSecOps, IaC, OIDC, cadena de suministro | **Avanzado** |
 
 El prerrequisito directo es **cd441**. Los cursos cd101, cd501 y gcp101 proveen el contexto operativo que cd441 y este curso asumen conocido.
 
