@@ -25,15 +25,7 @@ uv sync --frozen --extra dev
 uv run pytest --cov=apiflaskdemo --cov-fail-under=80
 ```
 
-### GitHub Actions — entorno `dev`
-
-`Settings → Environments → dev`
-
-| Tipo | Nombre | Valor |
-|---|---|---|
-| Variable | `DATABASE_URL` | `sqlite:///apiflask_dev.db` |
-| Secreto | `APP_SECRET_KEY` | string aleatorio ≥ 32 chars |
-| Secreto | `APP_SECURITY_PASSWORD_SALT` | string aleatorio ≥ 32 chars |
+No requiere entorno en GitHub Actions: ningún workflow referencia el entorno `dev`.
 
 ---
 
@@ -186,14 +178,24 @@ gcloud secrets versions add DATABASE_URL \
 
 #### `APP_SECRET_KEY` y `APP_SECURITY_PASSWORD_SALT`
 
+Genera los valores primero y guárdalos: los necesitarás en el paso 7 como secretos de GitHub Actions.
+
+```bash
+APP_SECRET_KEY_VAL=$(python3 -c 'import secrets; print(secrets.token_hex(32))')
+APP_SALT_VAL=$(python3 -c 'import secrets; print(secrets.token_hex(32))')
+
+echo "APP_SECRET_KEY:             $APP_SECRET_KEY_VAL"
+echo "APP_SECURITY_PASSWORD_SALT: $APP_SALT_VAL"
+```
+
+Copia esos valores en un gestor de contraseñas. Luego súbelos a Secret Manager:
+
 ```bash
 gcloud secrets create APP_SECRET_KEY --replication-policy=automatic
-echo -n "$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
-  | gcloud secrets versions add APP_SECRET_KEY --data-file=-
+echo -n "$APP_SECRET_KEY_VAL" | gcloud secrets versions add APP_SECRET_KEY --data-file=-
 
 gcloud secrets create APP_SECURITY_PASSWORD_SALT --replication-policy=automatic
-echo -n "$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
-  | gcloud secrets versions add APP_SECURITY_PASSWORD_SALT --data-file=-
+echo -n "$APP_SALT_VAL" | gcloud secrets versions add APP_SECURITY_PASSWORD_SALT --data-file=-
 ```
 
 #### Permisos del runtime SA sobre `APP_SECRET_KEY` y `APP_SECURITY_PASSWORD_SALT`
@@ -240,7 +242,7 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 
 > **Nota sobre `despliega-cloud-run.yaml` y el entorno `test`:** El workflow se dispara con cualquier tag semver, incluidos prerelease (`v1.2.3-rc.1` → `target=test`). Si el entorno `test` también usa Cloud Run, configura las mismas variables GCP en `Settings → Environments → test` del repo de la app. Si `test` solo usa el servidor Linux (no Cloud Run), el workflow fallará en el paso de autenticación OIDC para tags `-rc.*`; en ese caso, restringe el trigger del workflow a tags estables únicamente (`v[0-9]+.[0-9]+.[0-9]+`) o añade una condición `if` que omita el job para `test`.
 
-#### Repo de infra — entornos `test` y `prod`
+#### Repo de infra — entorno `prod`
 
 `Settings → Environments → prod` (en `infra/terraform-py271`)
 
@@ -256,7 +258,7 @@ Si el servicio se mantiene privado, el smoke test del workflow ya usa un identit
 | Variable | `CLOUD_SQL_TIER` | `db-f1-micro` |
 | Variable | `DB_USERNAME` | `app_user` |
 | Variable | `ENABLE_DELETION_PROTECTION` | `true` |
-| Variable | `GITHUB_REPOSITORY` | `org/api-github-actions-demo` |
+| Variable | `APP_GITHUB_REPOSITORY` | `org/api-github-actions-demo` |
 | Variable | `GCP_CLOUD_RUN_SERVICE` | `terraform output cloud_run_service_name` |
 | Variable | `TF_STATE_BUCKET` | nombre del bucket del paso 2 |
 | Secreto | `DB_PASSWORD` | valor de `TF_VAR_db_password` |
@@ -290,9 +292,9 @@ curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 
 | Tipo | Nombre | `dev` | `test` | `prod` |
 |---|---|---|---|---|
-| Variable | `DATABASE_URL` | `sqlite:///apiflask_dev.db` | `postgresql://...` | — (Secret Manager) |
-| Secreto | `APP_SECRET_KEY` | ✓ | ✓ | ✓ |
-| Secreto | `APP_SECURITY_PASSWORD_SALT` | ✓ | ✓ | ✓ |
+| Variable | `DATABASE_URL` | — | `postgresql://...` | — (Secret Manager) |
+| Secreto | `APP_SECRET_KEY` | — | ✓ | ✓ |
+| Secreto | `APP_SECURITY_PASSWORD_SALT` | — | ✓ | ✓ |
 | Variable | `GCP_PROJECT_ID` | — | — | ✓ |
 | Variable | `GCP_REGION` | — | — | ✓ |
 | Variable | `GCP_WORKLOAD_IDENTITY_PROVIDER` | — | — | ✓ |
