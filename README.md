@@ -183,3 +183,19 @@ cp .gitmodules.example .gitmodules
 - `apps/` contiene aplicaciones auxiliares como submódulos Git.
 - `infra/` contiene repositorios de IaC como submódulos Git o material de apoyo.
 - `ejercicios_resueltos/` sirve para práctica posterior a clase.
+
+## Bibliografía recomendada (abreviada)
+
+Selección troncal para el curso (formato APA):
+
+- Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate: The science of lean software and DevOps: Building and scaling high performing technology organizations*. IT Revolution Press.
+- Humble, J., & Farley, D. (2010). *Continuous delivery: Reliable software releases through build, test, and deployment automation*. Addison-Wesley.
+- National Institute of Standards and Technology. (2022). *Secure software development framework (SSDF) version 1.1: Recommendations for mitigating the risk of software vulnerabilities* (NIST Special Publication 800-218). https://doi.org/10.6028/NIST.SP.800-218
+- OWASP Foundation. (n.d.). *OWASP cheat sheet series*. Retrieved May 30, 2026, from https://cheatsheetseries.owasp.org/
+- SLSA. (n.d.). *SLSA specification v1.0*. Retrieved May 30, 2026, from https://slsa.dev/spec/v1.0/
+- Sigstore. (n.d.). *Sigstore documentation*. Retrieved May 30, 2026, from https://docs.sigstore.dev/
+- HashiCorp. (n.d.). *Terraform documentation*. Retrieved May 30, 2026, from https://developer.hashicorp.com/terraform/docs
+- Google Cloud. (n.d.). *Cloud architecture framework*. Retrieved May 30, 2026, from https://cloud.google.com/architecture/framework
+- Beyer, B., Jones, C., Petoff, J., & Murphy, N. R. (Eds.). (2017). *The site reliability workbook: Practical ways to implement SRE*. O'Reilly Media. https://sre.google/workbook/table-of-contents/
+
+Para la bibliografía detallada por notebook (01-21), consulta `21_criterios_y_tradeoffs_de_endurecimiento.ipynb`.
