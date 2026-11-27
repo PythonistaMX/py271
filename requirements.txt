@@ -1,28 +1,30 @@
-ipykernel
-jupyterlab
-nbformat
+# Entorno del curso py271 (Python 3.13)
+ipykernel==7.4.0
+jupyterlab==4.6.6
+nbformat==5.11.1
+nbclient==0.11.0
 
 # Calidad y pruebas
-pytest
-pytest-cov
-tox
-ruff
-mypy
-bandit
-flake8
-pylint
-isort
-black
-pre-commit
+pytest==9.2.0
+pytest-cov==7.1.0
+tox==4.67.16
+ruff==0.17.6
+mypy==2.4.1
+bandit==1.9.4
+flake8==7.5.0
+pylint==4.1.4
+isort==9.0.2
+black==26.10.1
+pre-commit==4.7.0
 
 # Dependencias de ejemplos y demos
-requests
-flask
-apiflask
+requests==2.34.2
+flask==3.1.3
+apiflask==3.1.3
 
 # Herramientas de entorno mencionadas en notebooks
-uv
-pipx
+uv==0.13.10
+pipx==1.19.1
 
 # Soporte de configuracion
-pyyaml
+pyyaml==6.0.4

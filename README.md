@@ -141,6 +141,12 @@ py271/
 
 Cada subcarpeta tiene su propio `README.md` con instrucciones de ejecución y reto.
 
+## Entorno de trabajo
+
+El curso se practica en **GitHub Codespaces** o en un [contenedor de desarrollo](https://containers.dev/) de *Visual Studio Code* (`.devcontainer/`). *Jupyter* corre dentro del contenedor, con *Python* 3.13 y las dependencias fijadas en `requirements.txt`. No se usa una máquina virtual.
+
+En la página del repositorio, el menú *Code* permite crear un *Codespace*. En *VS Code*, elige **Reopen in Container**.
+
 ## Uso local
 
 ```bash

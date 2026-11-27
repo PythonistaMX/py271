@@ -1,0 +1,110 @@
+# Valida la sintaxis de todos los cuadernos. Ejecuta con nbclient solo
+# los que no dependen de GCP, Terraform ni un anfitrión Linux real
+# (queda fuera el 13 al 20). El 01-12 y el 21 sí se ejecutan.
+name: Notebooks Smoke Test
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar-y-humo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Python 3.13
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validar notebooks y sintaxis
+        run: |
+          python - <<'PY'
+          import ast
+          import glob
+          import sys
+
+          import nbformat
+
+          NOTEBOOKS = sorted(glob.glob("[0-9][0-9]_*.ipynb"))
+          if not NOTEBOOKS:
+              sys.exit("[VALIDACIÓN] No se encontraron notebooks.")
+          fallas = []
+          for path in NOTEBOOKS:
+              nb = nbformat.read(path, as_version=4)
+              nbformat.validate(nb)
+              for i, cell in enumerate(nb.cells):
+                  if cell.cell_type != "code":
+                      continue
+                  fuente = "\n".join(
+                      l for l in cell.source.splitlines() if not l.lstrip().startswith(("%", "!"))
+                  )
+                  if not fuente.strip():
+                      continue
+                  try:
+                      compile(fuente, f"{path}[{i}]", "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT | ast.PyCF_ONLY_AST)
+                  except SyntaxError as exc:
+                      fallas.append(f"{path} celda {i}: {exc}")
+              print(f"[OK] {path}")
+          if fallas:
+              print("\n[VALIDACIÓN] Fallaron:", *fallas, sep="\n  - ")
+              sys.exit(1)
+          PY
+
+      - name: Ejecutar notebooks sin nube ni anfitrión Linux
+        run: |
+          python - <<'PY'
+          import glob
+          import os
+          import sys
+
+          import nbformat
+          from nbclient import NotebookClient
+
+          OMITIR = {
+              "13_terraform_fundamentos_y_estado_remoto.ipynb",
+              "14_terraform_para_artifact_registry_y_cloud_run.ipynb",
+              "15_terraform_para_compute_engine_y_red.ipynb",
+              "16_iam_oidc_y_autenticacion_sin_llaves.ipynb",
+              "17_pipelines_infra_plan_apply.ipynb",
+              "18_despliegue_seguro_en_linux.ipynb",
+              "19_observabilidad_smoke_tests_y_rollback.ipynb",
+              "20_proyecto_final_end_to_end.ipynb",
+          }
+          NOTEBOOKS = [p for p in sorted(glob.glob("[0-9][0-9]_*.ipynb")) if os.path.basename(p) not in OMITIR]
+          fallas = []
+          for path in NOTEBOOKS:
+              print(f"\n[SMOKE] Ejecutando: {path}")
+              nb = nbformat.read(path, as_version=4)
+              client = NotebookClient(
+                  nb, timeout=300, kernel_name="python3", allow_errors=False,
+                  resources={"metadata": {"path": os.path.dirname(path) or "."}},
+              )
+              try:
+                  client.execute()
+                  print(f"[OK] {path}")
+              except Exception as exc:  # noqa: BLE001
+                  print(f"[ERROR] {path}: {type(exc).__name__}: {str(exc)[:500]}")
+                  fallas.append(path)
+          if fallas:
+              print("\n[SMOKE] Fallaron:", *fallas, sep="\n  - ")
+              sys.exit(1)
+          print("\n[SMOKE] Cuadernos 01-12 y 21 ejecutados sin errores. Omitidos 13-20 (GCP, Terraform o Linux real).")
+          PY
