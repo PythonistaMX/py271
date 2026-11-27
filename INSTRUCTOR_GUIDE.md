@@ -64,7 +64,7 @@ La recomendacion didactica es promover el mismo artefacto entre entornos y varia
 - Construir y validar imagenes de contenedor en CI.
 - Aplicar criterio tecnico para decidir entre runners hosted y self-hosted.
 - Integrar controles de seguridad en la cadena de suministro.
-- Provisionar infraestructura con Terraform para despliegue continuo en Google Cloud Functions y Linux.
+- Provisionar infraestructura con Terraform para despliegue continuo en Google Cloud Run v2 y Linux.
 - Ejecutar despliegues con criterios de seguridad, observabilidad y rollback.
 
 ## Repositorios auxiliares sugeridos

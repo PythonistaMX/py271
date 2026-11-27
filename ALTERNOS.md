@@ -1,4 +1,4 @@
-# Entornos alternativos para práctica (fuera de Cloudevel)
+# Entornos alternativos para práctica
 
 Repos y labs similares al stack de py271, agrupados por tema.
 
@@ -41,4 +41,4 @@ Template listo para producción: Cloud Run Job en Python con pipeline CI/CD en A
 
 Para práctica sobre el tramo de mayor peso del curso (NB16 + NB17 + NB20), el par
 `mchmarny/oidc-for-gcp-using-terraform` + `google-github-actions/example-workflows`
-ofrece exactamente ese entorno replicable sin depender de Cloudevel.
+ofrece exactamente ese entorno replicable como práctica complementaria al material de este curso.

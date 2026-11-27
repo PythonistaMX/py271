@@ -1,6 +1,6 @@
 # CI/CD Seguro con GitHub Actions, GCP, Linux e IaC (Py271)
 
-> Estado: En preparación | Serie: py2xx | Nivel: Avanzado
+> Estado: Curso activo | Serie: py2xx | Nivel: Avanzado
 
 ## Nota sobre nivel
 
@@ -33,25 +33,18 @@ Se asume:
 - fluidez con Python;
 - uso cotidiano de git: commits, branches, merges y pull requests.
 
-Se asume haber completado cd441 o tener experiencia equivalente en CI/CD con GitHub Actions. No se asume conocimiento previo de DevSecOps, IaC ni seguridad de cadena de suministro, pero sí de pipelines básicos.
+## Conocimientos previos
 
-## Ruta de aprendizaje previa
+Además de lo anterior, se asume experiencia equivalente en:
 
-Este curso es la continuación natural de la siguiente ruta del catálogo Cloudevel:
+- línea de comandos en Linux: permisos, procesos, redes y SSH;
+- contenedores con Docker: imágenes, redes, volúmenes y registros;
+- servicios de Google Cloud usados en el curso: IAM, Compute Engine, Cloud Run, Cloud SQL y Secret Manager;
+- pipelines básicos de CI/CD con GitHub Actions (runners, artefactos y un despliegue a un runtime en la nube o a un servidor Linux por SSH).
 
-| Curso | Contenido | Nivel |
-|---|---|---|
-| [cd101 — GNU/Linux desde la línea de comandos](https://github.com/Cloudevel/cd101) | Shell, permisos, procesos, systemd, redes, SSH, seguridad básica | Introductorio |
-| [cd411 — Introducción a Git](https://github.com/Cloudevel/cd411) | Control de versiones, ramas, resolución de conflictos, integración con GitHub | Introductorio |
-| [cd421 — GitHub Avanzado](https://github.com/Cloudevel/cd421) | Administración de repos y organizaciones, GitHub Actions, entornos, secretos, `gh` CLI | Intermedio |
-| [cd501 — Gestión de contenedores con Docker](https://github.com/Cloudevel/cd501) | Imágenes, contenedores, redes, volúmenes, registros privados, Docker Compose | Intermedio |
-| [gcp101 — Google Cloud Platform](https://github.com/Cloudevel/gcp101) | IAM, Compute Engine, Cloud Run, Cloud SQL, Secret Manager, redes, operaciones | Intermedio |
-| [cd441 — CI/CD con GitHub Actions](https://github.com/Cloudevel/cd441) | Pipelines reales, runners, artefactos, despliegue en GCP y Linux | Intermedio |
-| **py271 — CI/CD Seguro** | Endurecimiento, DevSecOps, IaC, OIDC, cadena de suministro | **Avanzado** |
+No se asume conocimiento previo de DevSecOps, infraestructura como código ni seguridad de cadena de suministro.
 
-El prerrequisito directo es **cd441**. Los cursos cd101, cd501 y gcp101 proveen el contexto operativo que cd441 y este curso asumen conocido.
-
-> **Nota sobre Terraform:** los notebooks 13 al 17 introducen Terraform desde fundamentos. No existe aún un curso dedicado de Terraform en la serie; ese material se cubre aquí por primera vez.
+> **Nota sobre Terraform:** los notebooks 13 al 17 introducen Terraform desde fundamentos. No existe aún un curso dedicado de Terraform en la serie Pythonista; ese material se cubre aquí por primera vez.
 
 ## Modalidad sugerida
 
@@ -98,8 +91,10 @@ py271/
 ├── demos/
 ├── img/
 ├── infra/
-├── 01_*.ipynb ... 20_*.ipynb
+├── 01_*.ipynb ... 21_*.ipynb
+├── ALTERNOS.md
 ├── INSTRUCTOR_GUIDE.md
+├── OPERACIONES_GCP.md
 ├── README.md
 └── requirements.txt
 ```
@@ -182,7 +177,6 @@ cp .gitmodules.example .gitmodules
 - La observabilidad se trata como parte del pipeline de entrega: logs, métricas, alertas, smoke tests y rollback.
 - `apps/` contiene aplicaciones auxiliares como submódulos Git.
 - `infra/` contiene repositorios de IaC como submódulos Git o material de apoyo.
-- `ejercicios_resueltos/` sirve para práctica posterior a clase.
 
 ## Bibliografía recomendada (abreviada)
 
