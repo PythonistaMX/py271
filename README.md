@@ -35,7 +35,9 @@ Se asume:
 
 ## Conocimientos previos
 
-Además de lo anterior, se asume experiencia equivalente en:
+El prerrequisito directo es [cd441](https://github.com/Cloudevel/cd441) (Cloudevel), o experiencia equivalente en pipelines básicos con GitHub Actions.
+
+Además se asume experiencia en:
 
 - línea de comandos en Linux: permisos, procesos, redes y SSH;
 - contenedores con Docker: imágenes, redes, volúmenes y registros;
